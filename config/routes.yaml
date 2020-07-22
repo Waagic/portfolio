@@ -1,7 +1,7 @@
-index:
-    path: /
-    controller: App\Controller\DefaultController::index
+#index:
+ #   path: /
+  #  controller: App\Controller\DefaultController::index
 
-projects:
-    path: /test
-    controller: App\Controller\ProjectController::index
+#projects:
+ #   path: /test
+  #  controller: App\Controller\ProjectController::index
