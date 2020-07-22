@@ -1,0 +1,23 @@
+{% extends 'Admin/base.html.twig' %}
+
+{% block title %}Edit Infos{% endblock %}
+
+{% block body %}
+    <header class="masthead bg-primary text-white">
+        <div class="container d-flex flex-column">
+            <!-- Masthead Avatar Image-->
+            <h1>Editer mes infos</h1>
+
+            {{ include('Admin/Infos/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+            <!-- Icon Divider-->
+            <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- Masthead Subheading-->
+            <p class="masthead-subheading font-weight-light mb-0">{% block baseline %}{% endblock %}</p>
+        </div>
+    </header>
+{% endblock %}

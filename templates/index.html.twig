@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block h1 %}{{ moi.name }}{% endblock %}
 {% block baseline %}{{ moi.title }}{% endblock %}
-{% block logo %}{{ moi.profilePicture }}{% endblock %}
+{% block logo %}{{ asset('uploads/profile_pictures/' ~ moi.profilePicture) }}{% endblock %}
 {% block body %}
     <!-- Portfolio Section-->
     <section class="page-section portfolio" id="portfolio">
@@ -121,7 +121,7 @@
                         <br/>
                         <div id="success"></div>
                         <div class="form-group">
-                            <button class="btn btn-primary btn-xl" id="sendMessageButton" type="submit">Envoyer</button>
+                            <button class="btn btn-secondary btn-xl" id="sendMessageButton" type="submit">Envoyer</button>
                         </div>
                     </form>
                 </div>

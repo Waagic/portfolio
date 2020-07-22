@@ -1,0 +1,19 @@
+{% extends 'Admin/base.html.twig' %}
+{% block body %}
+    <header class="masthead bg-primary text-white">
+        <div class="container d-flex flex-column">
+            <!-- Masthead Avatar Image-->
+            <div class="container">
+                <a href="{{ path('admin_infos_edit', {'id': moi.id }) }}" class="text-white">Editer mes infos </a>
+            </div>
+            <!-- Icon Divider-->
+            <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- Masthead Subheading-->
+            <p class="masthead-subheading font-weight-light mb-0">{% block baseline %}{% endblock %}</p>
+        </div>
+    </header>
+{% endblock %}
