@@ -6,9 +6,9 @@
     <header class="masthead bg-primary text-white">
         <div class="container d-flex flex-column">
             <!-- Masthead Avatar Image-->
-            <h1 class="h3 mb-3 font-weight-normal">Editer mes infos</h1>
+            <h1 class="h3 mb-3 font-weight-normal">Modifier mon mail</h1>
 
-            {{ include('Admin/Infos/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+            {{ include('Admin/Email/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
             <!-- Icon Divider-->
             <div class="divider-custom divider-light">
@@ -16,8 +16,6 @@
                 <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
                 <div class="divider-custom-line"></div>
             </div>
-            <!-- Masthead Subheading-->
-            <p class="masthead-subheading font-weight-light mb-0">{% block baseline %}{% endblock %}</p>
         </div>
     </header>
 {% endblock %}
