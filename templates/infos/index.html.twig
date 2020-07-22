@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Infos index{% endblock %}
+
+{% block body %}
+    <h1>Infos index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Bio</th>
+                <th>Title</th>
+                <th>Profile_picture</th>
+                <th>Facebook</th>
+                <th>Twitter</th>
+                <th>Linkedin</th>
+                <th>Github</th>
+                <th>Adress</th>
+                <th>Bio2</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for info in infos %}
+            <tr>
+                <td>{{ info.id }}</td>
+                <td>{{ info.name }}</td>
+                <td>{{ info.bio }}</td>
+                <td>{{ info.title }}</td>
+                <td>{{ info.profilePicture }}</td>
+                <td>{{ info.facebook }}</td>
+                <td>{{ info.twitter }}</td>
+                <td>{{ info.linkedin }}</td>
+                <td>{{ info.github }}</td>
+                <td>{{ info.adress }}</td>
+                <td>{{ info.bio2 }}</td>
+                <td>
+                    <a href="{{ path('infos_show', {'id': info.id}) }}">show</a>
+                    <a href="{{ path('infos_edit', {'id': info.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="12">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('infos_new') }}">Create new</a>
+{% endblock %}
