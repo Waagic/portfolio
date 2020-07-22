@@ -3,10 +3,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Contacts;
 use App\Entity\User;
 use App\Form\EditEmailType;
 use App\Form\EditPasswordType;
 use App\Form\UserType;
+use App\Repository\ContactsRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -24,15 +26,17 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin", name="index")
      * @param UserRepository $userRepository
+     * @param ContactsRepository $contactsRepository
      * @return Response
      */
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, ContactsRepository $contactsRepository): Response
     {
 
         return $this->render('Admin/index.html.twig', [
             'moi' => $userRepository->findOneBy([
                 'name' => 'Lucas Marguiron'
-            ])
+            ]),
+            'contacts' => $contactsRepository->findAll()
         ]);
     }
 
@@ -131,5 +135,22 @@ class AdminController extends AbstractController
         return $this->render('Admin/Password/editPassword.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/admin/contact-delete/{id}", name="delete_contact", methods={"DELETE"})
+     * @param Request $request
+     * @param Contacts $contacts
+     * @return Response
+     */
+    public function deleteCategory(Request $request, Contacts $contacts): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$contacts->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($contacts);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('admin_index');
     }
 }

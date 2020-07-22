@@ -8,7 +8,8 @@
                 <h2 class="h2 mb-3 font-weight-normal">Informations personnelles</h2>
                 <a href="{{ path('admin_infos_edit', {'id': moi.id }) }}" class="text-white">Editer mes infos </a><br>
                 <a href="{{ path('admin_email_edit', {'id': moi.id}) }}" class="text-white"> Modifier mon mail </a><br>
-                <a href="{{ path('admin_password_edit', {'id': moi.id}) }}" class="text-white"> Modifier mon mot de passe </a>
+                <a href="{{ path('admin_password_edit', {'id': moi.id}) }}" class="text-white"> Modifier mon mot de
+                    passe </a>
             </div>
             <!-- Icon Divider-->
             <div class="divider-custom divider-light">
@@ -20,4 +21,28 @@
             <p class="masthead-subheading font-weight-light mb-0">{% block baseline %}{% endblock %}</p>
         </div>
     </header>
+    <section class="page-section">
+        <div class="container">
+            <h2 class="h2 mb-3 font-weight-normal">Demande de contact</h2>
+            <div class="row flex-wrap">
+                {% for contact in contacts %}
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ contact.name }} - le {{ contact.date|date("d/m/Y") }}</h5>
+                                <p class="card-text">{{ contact.message }}</p>
+                                <ul>
+                                    <li>{{ contact.mail }}</li>
+                                    {% if contact.phone %}
+                                        <li>{{ contact.phone }}</li>
+                                    {% endif %}
+                                </ul>
+                                {% include 'Admin/_contactDeleteForm.html.twig' %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
 {% endblock %}
