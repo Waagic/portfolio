@@ -5,11 +5,20 @@
             <!-- Masthead Avatar Image-->
             <div class="container">
                 <h1 class="h1 mb-3 font-weight-normal text-center">Administration</h1>
-                <h2 class="h2 mb-3 font-weight-normal">Informations personnelles</h2>
-                <a href="{{ path('admin_infos_edit', {'id': moi.id }) }}" class="text-white">Editer mes infos </a><br>
-                <a href="{{ path('admin_email_edit', {'id': moi.id}) }}" class="text-white"> Modifier mon mail </a><br>
-                <a href="{{ path('admin_password_edit', {'id': moi.id}) }}" class="text-white"> Modifier mon mot de
-                    passe </a>
+                <div class="mb-5">
+                    <h2 class="h2 mb-3 font-weight-normal">Informations personnelles</h2>
+                    <a href="{{ path('admin_infos_edit', {'id': moi.id }) }}" class="text-white">Editer mes
+                        infos </a><br>
+                    <a href="{{ path('admin_email_edit', {'id': moi.id}) }}" class="text-white"> Modifier mon
+                        mail </a><br>
+                    <a href="{{ path('admin_password_edit', {'id': moi.id}) }}" class="text-white"> Modifier mon mot de
+                        passe </a><br>
+                </div>
+                <div>
+                    <h2 class="h2 mb-3 font-weight-normal">Projets</h2>
+                    <a href="{{ path('admin_new_projet') }}" class="text-white">Ajouter un projet</a>
+                </div>
+
             </div>
             <!-- Icon Divider-->
             <div class="divider-custom divider-light">

@@ -29,7 +29,7 @@ class UserFixtures extends Fixture
         $user->setBio1("Je suis un bébé développeur web");
         $user->setBio2("J'apprends le PHP et c'est bien");
         $user->setTitle("Développeur web junior");
-        $user->setProfilePicture("{{ asset('img/moi.JPG') }}");
+        $user->setProfilePicture("img/moi.JPG");
         $user->setFacebook("https://www.facebook.com/lucas.marguiron");
         $user->setTwitter("https://twitter.com/S0cialGeek");
         $user->setLinkedin("https://www.linkedin.com/in/lucas-marguiron-3682a54b/");

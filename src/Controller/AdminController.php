@@ -4,9 +4,11 @@
 namespace App\Controller;
 
 use App\Entity\Contacts;
+use App\Entity\Projects;
 use App\Entity\User;
 use App\Form\EditEmailType;
 use App\Form\EditPasswordType;
+use App\Form\ProjectType;
 use App\Form\UserType;
 use App\Repository\ContactsRepository;
 use App\Repository\UserRepository;
@@ -152,5 +154,29 @@ class AdminController extends AbstractController
         }
 
         return $this->redirectToRoute('admin_index');
+    }
+
+    /**
+     * @Route("/admin/new-projet", name="new_projet")
+     * @param Request $request
+     * @return Response
+     */
+    public function newProject(Request $request): Response
+    {
+        $project = new Projects();
+        $form = $this->createForm(ProjectType::class, $project);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($project);
+            $entityManager->flush();
+
+            return $this->redirectToRoute("admin_index");
+        }
+
+        return $this->render('Admin/Project/new.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }

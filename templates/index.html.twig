@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 {% block h1 %}{{ moi.name }}{% endblock %}
 {% block baseline %}{{ moi.title }}{% endblock %}
-{% block logo %}{{ asset('uploads/profile_pictures/' ~ moi.profilePicture) }}{% endblock %}
+{% block logo %}{{ asset('uploads/profile_pictures/' ~ moi.profilePicture|default('../../img/moi.JPG')) }}{% endblock %}
 {% block body %}
     <!-- Portfolio Section-->
     <section class="page-section portfolio" id="portfolio">
