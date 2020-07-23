@@ -2,21 +2,21 @@
 
 namespace App\Repository;
 
-use App\Entity\Screenshots;
+use App\Entity\Screenshot;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Screenshots|null find($id, $lockMode = null, $lockVersion = null)
- * @method Screenshots|null findOneBy(array $criteria, array $orderBy = null)
- * @method Screenshots[]    findAll()
- * @method Screenshots[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Screenshot|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Screenshot|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Screenshot[]    findAll()
+ * @method Screenshot[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ScreenshotsRepository extends ServiceEntityRepository
+class ScreenshotRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Screenshots::class);
+        parent::__construct($registry, Screenshot::class);
     }
 
     // /**

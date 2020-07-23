@@ -36,6 +36,7 @@
 <div class="control-group">
     <div class="form-group floating-label-form-group controls mb-0 pb-2">
         <label>Numéro de téléphone</label>
+        {{ form_errors(form.phone) }}
         {{ form_widget(form.phone,
             {'attr' :
                 {
@@ -51,6 +52,7 @@
 <div class="control-group">
     <div class="form-group floating-label-form-group controls mb-0 pb-2">
         <label>Message</label>
+        {{ form_errors(form.message) }}
         {{ form_widget(form.message,
             {'attr' :
                 {
