@@ -3,12 +3,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Contacts;
+use App\Entity\Contact;
 use App\Form\ContactType;
-use App\Repository\ProjectsRepository;
+use App\Repository\ProjectRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,12 +20,12 @@ class DefaultController extends AbstractController
      * @Route("/", name="index")
      * @param UserRepository $userRepository
      * @param Request $request
-     * @param ProjectsRepository $projectsRepository
+     * @param ProjectRepository $projectRepository
      * @return Response
      */
-    public function index(UserRepository $userRepository, Request $request, ProjectsRepository $projectsRepository): Response
+    public function index(UserRepository $userRepository, Request $request, ProjectRepository $projectRepository): Response
     {
-        $contact = new Contacts();
+        $contact = new Contact();
         $form = $this->createForm(ContactType::class, $contact);
         $form->handleRequest($request);
 
@@ -44,7 +43,7 @@ class DefaultController extends AbstractController
             'moi' => $userRepository->findOneBy([
                 'name'=>'Lucas Marguiron'
             ]),
-            'projects' => $projectsRepository->findBy(
+            'projects' => $projectRepository->findBy(
                 array(),
                 array('id' => 'desc'),
                 3,

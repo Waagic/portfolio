@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\ProjectsRepository;
+use App\Repository\ProjectRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=ProjectsRepository::class)
+ * @ORM\Entity(repositoryClass=ProjectRepository::class)
  */
-class Projects
+class Project
 {
     /**
      * @ORM\Id()
@@ -40,9 +40,9 @@ class Projects
     private $description1;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Languages::class, inversedBy="projects")
+     * @ORM\ManyToMany(targetEntity=Language::class, inversedBy="project")
      */
-    private $languages;
+    private $language;
 
     /**
      * @ORM\Column(type="text")
@@ -56,14 +56,14 @@ class Projects
 
     /**
      * @ORM\OneToMany(
-     *     targetEntity=Screenshots::class,
+     *     targetEntity=Screenshot::class,
      *     mappedBy="project",
      *     orphanRemoval=true,
      *     fetch="EXTRA_LAZY",
      *     cascade={"persist"}
      *     )
      */
-    private $screenshots;
+    private $screenshot;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -72,8 +72,8 @@ class Projects
 
     public function __construct()
     {
-        $this->languages = new ArrayCollection();
-        $this->screenshots = new ArrayCollection();
+        $this->language = new ArrayCollection();
+        $this->screenshot = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -130,26 +130,26 @@ class Projects
     }
 
     /**
-     * @return Collection|Languages[]
+     * @return Collection|Language[]
      */
-    public function getLanguages(): Collection
+    public function getLanguage(): Collection
     {
-        return $this->languages;
+        return $this->language;
     }
 
-    public function addLanguage(Languages $language): self
+    public function addLanguage(Language $language): self
     {
-        if (!$this->languages->contains($language)) {
-            $this->languages[] = $language;
+        if (!$this->language->contains($language)) {
+            $this->language[] = $language;
         }
 
         return $this;
     }
 
-    public function removeLanguage(Languages $language): self
+    public function removeLanguage(Language $language): self
     {
-        if ($this->languages->contains($language)) {
-            $this->languages->removeElement($language);
+        if ($this->language->contains($language)) {
+            $this->language->removeElement($language);
         }
 
         return $this;
@@ -180,27 +180,27 @@ class Projects
     }
 
     /**
-     * @return Collection|Screenshots[]
+     * @return Collection|Screenshot[]
      */
-    public function getScreenshots(): Collection
+    public function getScreenshot(): Collection
     {
-        return $this->screenshots;
+        return $this->screenshot;
     }
 
-    public function addScreenshot(Screenshots $screenshot): self
+    public function addScreenshot(Screenshot $screenshot): self
     {
-        if (!$this->screenshots->contains($screenshot)) {
-            $this->screenshots[] = $screenshot;
+        if (!$this->screenshot->contains($screenshot)) {
+            $this->screenshot[] = $screenshot;
             $screenshot->setProject($this);
         }
 
         return $this;
     }
 
-    public function removeScreenshot(Screenshots $screenshot): self
+    public function removeScreenshot(Screenshot $screenshot): self
     {
-        if ($this->screenshots->contains($screenshot)) {
-            $this->screenshots->removeElement($screenshot);
+        if ($this->screenshot->contains($screenshot)) {
+            $this->screenshot->removeElement($screenshot);
             // set the owning side to null (unless already changed)
             if ($screenshot->getProject() === $this) {
                 $screenshot->setProject(null);

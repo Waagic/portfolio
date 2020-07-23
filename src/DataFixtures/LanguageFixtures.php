@@ -2,7 +2,7 @@
 
 
 namespace App\DataFixtures;
-use App\Entity\Languages;
+use App\Entity\Language;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -10,19 +10,19 @@ class LanguageFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        $language = new Languages();
+        $language = new Language();
         $language->setName("PHP");
         $language->setIcon("fab fa-php");
         $this->addReference('PHP', $language);
         $manager->persist($language);
 
-        $language = new Languages();
+        $language = new Language();
         $language->setName("JavaScript");
         $language->setIcon("fab fa-js");
         $this->addReference('JavaScript', $language);
         $manager->persist($language);
 
-        $language = new Languages();
+        $language = new Language();
         $language->setName("Symfony");
         $language->setIcon("fab fa-symfony");
         $this->addReference('Symfony', $language);

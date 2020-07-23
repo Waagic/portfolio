@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\ContactsRepository;
+use App\Repository\ContactRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ContactsRepository::class)
  */
-class Contacts
+class Contact
 {
     /**
      * @ORM\Id()

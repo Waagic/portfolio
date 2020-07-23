@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=LanguagesRepository::class)
  */
-class Languages
+class Language
 {
     /**
      * @ORM\Id()
@@ -25,9 +25,9 @@ class Languages
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Projects::class, mappedBy="languages")
+     * @ORM\ManyToMany(targetEntity=Project::class, mappedBy="language")
      */
-    private $projects;
+    private $project;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -36,7 +36,7 @@ class Languages
 
     public function __construct()
     {
-        $this->projects = new ArrayCollection();
+        $this->project = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -57,27 +57,27 @@ class Languages
     }
 
     /**
-     * @return Collection|Projects[]
+     * @return Collection|Project[]
      */
     public function getProjects(): Collection
     {
-        return $this->projects;
+        return $this->project;
     }
 
-    public function addProject(Projects $project): self
+    public function addProject(Project $project): self
     {
-        if (!$this->projects->contains($project)) {
-            $this->projects[] = $project;
+        if (!$this->project->contains($project)) {
+            $this->project[] = $project;
             $project->addLanguage($this);
         }
 
         return $this;
     }
 
-    public function removeProject(Projects $project): self
+    public function removeProject(Project $project): self
     {
-        if ($this->projects->contains($project)) {
-            $this->projects->removeElement($project);
+        if ($this->project->contains($project)) {
+            $this->project->removeElement($project);
             $project->removeLanguage($this);
         }
 

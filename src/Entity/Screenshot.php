@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\ScreenshotsRepository;
+use App\Repository\ScreenshotRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=ScreenshotsRepository::class)
  */
-class Screenshots
+class Screenshot
 {
     /**
      * @ORM\Id()
@@ -28,7 +28,7 @@ class Screenshots
     private $title;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Projects::class, inversedBy="screenshots")
+     * @ORM\ManyToOne(targetEntity=Project::class, inversedBy="screenshot")
      * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $project;
@@ -62,12 +62,12 @@ class Screenshots
         return $this;
     }
 
-    public function getProject(): ?Projects
+    public function getProject(): ?Project
     {
         return $this->project;
     }
 
-    public function setProject(?Projects $project): self
+    public function setProject(?Project $project): self
     {
         $this->project = $project;
 
