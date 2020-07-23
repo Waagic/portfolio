@@ -2,14 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\ContactsRepository;
+use App\Repository\ContactRepository;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=ContactsRepository::class)
+ * @ORM\Entity(repositoryClass=ContactRepository::class)
  */
-class Contacts
+class Contact
 {
     /**
      * @ORM\Id()
@@ -20,11 +21,15 @@ class Contacts
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="Le message ne devrait pas être vide")
      */
     private $message;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=180)
+     * @Assert\Email(message="Veuillez rentrer une adresse mail valide")
+     * @Assert\Length(max="180", allowEmptyString="false")
+     * @Assert\NotBlank(message="Ce champ ne doit pas être vide")
      */
     private $mail;
 
@@ -34,12 +39,16 @@ class Contacts
     private $date;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=10)
+     * @Assert\Length(max="10", allowEmptyString="false", maxMessage="Veuillez entrer un numéro à 10 chiffres")
+     * @Assert\Regex(pattern="/^[0-9]*$/", message="Le numéro de téléphone ne doit contenir que des chiffres")
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(max="255", allowEmptyString="false", maxMessage="Ce champ est trop long")
+     * @Assert\NotBlank(message="Ce champ ne doit pas être vide")
      */
     private $name;
 

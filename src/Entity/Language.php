@@ -2,15 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\LanguagesRepository;
+use App\Repository\LanguageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=LanguagesRepository::class)
+ * @ORM\Entity(repositoryClass=LanguageRepository::class)
  */
-class Languages
+class Language
 {
     /**
      * @ORM\Id()
@@ -21,22 +22,25 @@ class Languages
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(max="255", allowEmptyString="false", maxMessage="Ce champ est trop long")
+     * @Assert\NotBlank(message="Ce champ ne doit pas être vide")
      */
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Projects::class, mappedBy="languages")
+     * @ORM\ManyToMany(targetEntity=Project::class, mappedBy="language")
      */
-    private $projects;
+    private $project;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(max="255", allowEmptyString="false", maxMessage="Ce champ est trop long")
      */
     private $icon;
 
     public function __construct()
     {
-        $this->projects = new ArrayCollection();
+        $this->project = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -57,27 +61,27 @@ class Languages
     }
 
     /**
-     * @return Collection|Projects[]
+     * @return Collection|Project[]
      */
     public function getProjects(): Collection
     {
-        return $this->projects;
+        return $this->project;
     }
 
-    public function addProject(Projects $project): self
+    public function addProject(Project $project): self
     {
-        if (!$this->projects->contains($project)) {
-            $this->projects[] = $project;
+        if (!$this->project->contains($project)) {
+            $this->project[] = $project;
             $project->addLanguage($this);
         }
 
         return $this;
     }
 
-    public function removeProject(Projects $project): self
+    public function removeProject(Project $project): self
     {
-        if ($this->projects->contains($project)) {
-            $this->projects->removeElement($project);
+        if ($this->project->contains($project)) {
+            $this->project->removeElement($project);
             $project->removeLanguage($this);
         }
 

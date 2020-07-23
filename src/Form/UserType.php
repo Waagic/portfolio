@@ -38,7 +38,7 @@ class UserType extends AbstractType
             ->add('twitter', TextType::class)
             ->add('linkedin', TextType::class)
             ->add('github', TextType::class)
-            ->add('adress', TextType::class, ['label' => "Adresse"])
+            ->add('address', TextType::class, ['label' => "Adresse"])
         ;
     }
 

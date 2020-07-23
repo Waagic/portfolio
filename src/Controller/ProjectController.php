@@ -3,9 +3,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Projects;
+use App\Entity\Project;
 use App\Entity\User;
-use App\Repository\ProjectsRepository;
+use App\Repository\ProjectRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,15 +24,15 @@ class ProjectController extends AbstractController
 
     /**
      * @Route("/projet/{id}", name="show")
-     * @param ProjectsRepository $projectRepository
-     * @param Projects $projects
+     * @param ProjectRepository $projectRepository
+     * @param Project $projects
      * @return Response
      */
-    public function index(ProjectsRepository $projectRepository, Projects $projects): Response
+    public function index(ProjectRepository $projectRepository, Project $project): Response
     {
         return $this->render('Projects/show.html.twig', [
             'moi' => $this->user,
-            'project' => $projects
+            'project' => $project
         ]);
     }
 }

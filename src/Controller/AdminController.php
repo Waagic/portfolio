@@ -3,17 +3,17 @@
 
 namespace App\Controller;
 
-use App\Entity\Contacts;
-use App\Entity\Languages;
-use App\Entity\Projects;
+use App\Entity\Contact;
+use App\Entity\Language;
+use App\Entity\Project;
 use App\Entity\User;
 use App\Form\EditEmailType;
 use App\Form\EditPasswordType;
 use App\Form\LanguageType;
 use App\Form\ProjectType;
 use App\Form\UserType;
-use App\Repository\ContactsRepository;
-use App\Repository\ProjectsRepository;
+use App\Repository\ContactRepository;
+use App\Repository\ProjectRepository;
 use App\Repository\UserRepository;
 use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,18 +30,19 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin", name="index")
      * @param UserRepository $userRepository
-     * @param ContactsRepository $contactsRepository
+     * @param ContactRepository $contactRepository
+     * @param ProjectRepository $projectRepository
      * @return Response
      */
-    public function index(UserRepository $userRepository, ContactsRepository $contactsRepository, ProjectsRepository $projectsRepository): Response
+    public function index(UserRepository $userRepository, ContactRepository $contactRepository, ProjectRepository $projectRepository): Response
     {
 
         return $this->render('Admin/index.html.twig', [
             'moi' => $userRepository->findOneBy([
                 'name' => 'Lucas Marguiron'
             ]),
-            'contacts' => $contactsRepository->findAll(),
-            'projects' => $projectsRepository->findAll()
+            'contacts' => $contactRepository->findAll(),
+            'projects' => $projectRepository->findAll()
         ]);
     }
 
@@ -130,14 +131,14 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/contact/{id}/delete", name="delete_contact", methods={"DELETE"})
      * @param Request $request
-     * @param Contacts $contacts
+     * @param Contact $contact
      * @return Response
      */
-    public function deleteContact(Request $request, Contacts $contacts): Response
+    public function deleteContact(Request $request, Contact $contact): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $contacts->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $contact->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($contacts);
+            $entityManager->remove($contact);
             $entityManager->flush();
         }
 
@@ -147,11 +148,12 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/projet/new", name="new_projet")
      * @param Request $request
+     * @param FileUploader $fileUploader
      * @return Response
      */
     public function newProject(Request $request, FileUploader $fileUploader): Response
     {
-        $project = new Projects();
+        $project = new Project();
         $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);
 
@@ -193,12 +195,12 @@ class AdminController extends AbstractController
      * @Route("/admin/projet/{id}/edit", name="edit_projet")
      * @param Request $request
      * @param FileUploader $fileUploader
-     * @param Projects $projects
+     * @param Project $project
      * @return Response
      */
-    public function editProject(Request $request, FileUploader $fileUploader, Projects $projects): Response
+    public function editProject(Request $request, FileUploader $fileUploader, Project $project): Response
     {
-        $form = $this->createForm(ProjectType::class, $projects);
+        $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -230,7 +232,7 @@ class AdminController extends AbstractController
         }
 
         return $this->render('Admin/Project/edit.html.twig', [
-            'project' => $projects,
+            'project' => $project,
             'form' => $form->createView()
         ]);
     }
@@ -238,10 +240,10 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin/projet/{id}/delete", name="delete_project", methods={"DELETE"})
      * @param Request $request
-     * @param Projects $project
+     * @param Project $project
      * @return Response
      */
-    public function deleteProject(Request $request, Projects $project): Response
+    public function deleteProject(Request $request, Project $project): Response
     {
         if ($this->isCsrfTokenValid('delete' . $project->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -257,9 +259,9 @@ class AdminController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function newLangage(Request $request): Response
+    public function newLanguage(Request $request): Response
     {
-        $langage = new Languages();
+        $langage = new Language();
         $form = $this->createForm(LanguageType::class, $langage);
         $form->handleRequest($request);
 

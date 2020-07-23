@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -20,6 +21,9 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email(message="Veuillez rentrer une adresse mail valide")
+     * @Assert\Length(max="180", allowEmptyString="false")
+     * @Assert\NotBlank(message="Ce champ ne doit pas être vide")
      */
     private $email;
 
@@ -36,6 +40,8 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(max="255", allowEmptyString="false", maxMessage="Ce champ est trop long")
+     * @Assert\NotBlank(message="Ce champ ne doit pas être vide")
      */
     private $name;
 
@@ -51,38 +57,46 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(max="255", allowEmptyString="false", maxMessage="Ce champ est trop long")
+     * @Assert\NotBlank(message="Ce champ ne doit pas être vide")
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(max="255", allowEmptyString="false", maxMessage="Ce champ est trop long")
      */
     private $profile_picture;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(max="255", allowEmptyString="false", maxMessage="Ce champ est trop long")
      */
     private $facebook;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(max="255", allowEmptyString="false", maxMessage="Ce champ est trop long")
      */
     private $twitter;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(max="255", allowEmptyString="false", maxMessage="Ce champ est trop long")
      */
     private $linkedin;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(max="255", allowEmptyString="false", maxMessage="Ce champ est trop long")
      */
     private $github;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(max="255", allowEmptyString="false", maxMessage="Ce champ est trop long")
      */
-    private $adress;
+    private $address;
 
     public function getId(): ?int
     {
@@ -270,14 +284,14 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getAdress(): ?string
+    public function getAddress(): ?string
     {
-        return $this->adress;
+        return $this->address;
     }
 
-    public function setAdress(?string $adress): self
+    public function setAddress(?string $address): self
     {
-        $this->adress = $adress;
+        $this->address = $address;
 
         return $this;
     }
