@@ -16,6 +16,7 @@ class ScreenshotType extends AbstractType
         $builder
             ->add('fileUpload', FileType::class, [
                 'label' => 'Logo',
+                'empty_data' => '',
                 'mapped' => false,
                 'required' => false,
                 'constraints' => [
