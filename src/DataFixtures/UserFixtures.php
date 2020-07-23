@@ -33,7 +33,7 @@ class UserFixtures extends Fixture
         $user->setTwitter("https://twitter.com/S0cialGeek");
         $user->setLinkedin("https://www.linkedin.com/in/lucas-marguiron-3682a54b/");
         $user->setGithub("https://github.com/Waagic");
-        $user->setAdress("17 quai Arloing 69009 Lyon");
+        $user->setAddress("17 quai Arloing 69009 Lyon");
         $manager->persist($user);
         $manager->flush();
     }

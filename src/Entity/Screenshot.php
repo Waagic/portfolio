@@ -4,9 +4,10 @@ namespace App\Entity;
 
 use App\Repository\ScreenshotRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=ScreenshotsRepository::class)
+ * @ORM\Entity(repositoryClass=ScreenshotRepository::class)
  */
 class Screenshot
 {
@@ -19,11 +20,15 @@ class Screenshot
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(max="255", allowEmptyString="false", maxMessage="Ce champ est trop long")
+     * @Assert\NotBlank(message="Ce champ ne doit pas être vide")
      */
     private $file;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(max="255", allowEmptyString="false", maxMessage="Ce champ est trop long")
+     * @Assert\NotBlank(message="Ce champ ne doit pas être vide")
      */
     private $title;
 

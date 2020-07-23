@@ -14,7 +14,7 @@ class LanguageType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, ['label' => 'Nom'])
-            ->add('icon', TextType::class, ['label' => 'Icone'])
+            ->add('icon', TextType::class, ['label' => 'Icone', 'required' => false])
         ;
     }
 
