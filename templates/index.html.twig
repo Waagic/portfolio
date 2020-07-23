@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+{% block h1 %}{{ moi.name }}{% endblock %}
+{% block baseline %}{{ moi.title }}{% endblock %}
+{% block logo %}{{ asset('uploads/profile_pictures/' ~ moi.profilePicture|default('../../img/moi.JPG')) }}{% endblock %}
+{% block body %}
+    <!-- Portfolio Section-->
+    <section class="page-section portfolio" id="portfolio">
+        <div class="container">
+            <!-- Portfolio Section Heading-->
+            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Portfolio</h2>
+            <!-- Icon Divider-->
+            <div class="divider-custom">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- Portfolio Grid Items-->
+            <div class="row">
+                {% for project in projects %}
+                    <div class="col-md-6 col-lg-4 mb-5">
+                        <a href="{{ path('project_show', {'id': project.id }) }}">
+                            <div class="portfolio-item mx-auto">
+                                <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                    <div class="portfolio-item-caption-content text-center text-white">{{ project.title }}</div>
+                                </div>
+                                <img class="img-fluid" src="{{ asset('uploads/projects/covers/' ~ project.cover|default('../../../img/socialgeek.png')) }}" alt=""/>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- About Section-->
+    <section class="page-section bg-primary text-white mb-0" id="about">
+        <div class="container">
+            <!-- About Section Heading-->
+            <h2 class="page-section-heading text-center text-uppercase text-white">A propos de moi</h2>
+            <!-- Icon Divider-->
+            <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- About Section Content-->
+            <div class="row">
+                <div class="col-lg-4 ml-auto"><p class="lead">{{ moi.bio1 }}</p></div>
+                <div class="col-lg-4 mr-auto"><p class="lead">{{ moi.bio2 }}</p></div>
+            </div>
+        </div>
+    </section>
+    <!-- Contact Section-->
+    <section class="page-section" id="contact">
+        <div class="container">
+            <!-- Contact Section Heading-->
+            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Me contacter</h2>
+            <!-- Icon Divider-->
+            <div class="divider-custom">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- Contact Section Form-->
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    {{ include('_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

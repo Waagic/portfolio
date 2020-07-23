@@ -1,0 +1,14 @@
+@import "theme.css";
+.masthead .masthead-avatar {
+  width: 15rem;
+  height: 15rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.languageicon {
+  font-size: 4em;
+  color: #343148;
+}
+
+/*# sourceMappingURL=app.css.map */
