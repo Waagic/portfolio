@@ -32,8 +32,9 @@
     </header>
     <section class="page-section">
         <div class="container">
-            <h2 class="h2 mb-3 font-weight-normal">Demande de contact</h2>
+            <h2 class="h2 mb-3 font-weight-normal">Demandes de contact</h2>
             <div class="row flex-wrap">
+                {% if contacts %}
                 {% for contact in contacts %}
                     <div class="col-sm-6">
                         <div class="card">
@@ -52,6 +53,9 @@
                     </div>
                 {% endfor %}
             </div>
+            {% else %}
+                <p class="ml-4">Y'a personne frr</p>
+            {% endif %}
         </div>
     </section>
 {% endblock %}

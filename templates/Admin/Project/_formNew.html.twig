@@ -14,7 +14,7 @@
             {% for screenshot in form.screenshots %}
                 <div class="js-methodLink-item">
                     {{ form_errors(screenshot) }}
-                    {{ form_row(screenshot.url) }}
+                    {{ form_row(screenshot.fileUpload) }}
                     {{ form_row(screenshot.title) }}
                 </div>
             {% endfor %}

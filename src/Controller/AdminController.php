@@ -12,6 +12,7 @@ use App\Form\ProjectType;
 use App\Form\UserType;
 use App\Repository\ContactsRepository;
 use App\Repository\UserRepository;
+use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,9 +47,10 @@ class AdminController extends AbstractController
      * @Route("admin/{id}/edit", name="infos_edit", methods={"GET","POST"})
      * @param Request $request
      * @param User $user
+     * @param FileUploader $fileUploader
      * @return Response
      */
-    public function edit(Request $request, User $user): Response
+    public function edit(Request $request, User $user, FileUploader $fileUploader): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -59,24 +61,8 @@ class AdminController extends AbstractController
             // this condition is needed because the 'brochure' field is not required
             // so the file must be processed only when a file is uploaded
             if ($pictureFile) {
-                $originalFilename = pathinfo($pictureFile->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
-                $newFilename = $safeFilename . '-' . uniqid() . '.' . $pictureFile->guessExtension();
-
-                // Move the file to the directory where brochures are stored
-                try {
-                    $pictureFile->move(
-                        $this->getParameter('pictures_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
-
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
-                $user->setProfilePicture($newFilename);
+                $pictureFileName = $fileUploader->upload($pictureFile, $this->getParameter('pictures_directory'));
+                $user->setProfilePicture($pictureFileName);
             }
 
             $this->getDoctrine()->getManager()->flush();
@@ -145,7 +131,7 @@ class AdminController extends AbstractController
      * @param Contacts $contacts
      * @return Response
      */
-    public function deleteCategory(Request $request, Contacts $contacts): Response
+    public function deleteContact(Request $request, Contacts $contacts): Response
     {
         if ($this->isCsrfTokenValid('delete'.$contacts->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
@@ -161,13 +147,29 @@ class AdminController extends AbstractController
      * @param Request $request
      * @return Response
      */
-    public function newProject(Request $request): Response
+    public function newProject(Request $request, FileUploader $fileUploader): Response
     {
         $project = new Projects();
         $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $logo = $form->get('logo')->getData();
+            if ($logo) {
+                $pictureFileName = $fileUploader->upload($logo, $this->getParameter('logos_directory'));
+                $project->setLogo($pictureFileName);
+            }
+
+            $screenshots = $form->get('screenshots')->all();
+            if($screenshots){
+                foreach ($screenshots as $screenshot){
+                    $pictureFileName = $fileUploader->upload($screenshot->get('fileUpload')->getData(), $this->getParameter('screenshots_directory'));
+                    $screenshot->getData()->setFile($pictureFileName);
+                }
+            }
+
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($project);
             $entityManager->flush();
