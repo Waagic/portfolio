@@ -1,0 +1,85 @@
+{% extends 'Admin/base.html.twig' %}
+{% block body %}
+    <header class="masthead bg-primary text-white">
+        <div class="container d-flex flex-column">
+            <!-- Masthead Avatar Image-->
+            <div class="container">
+                <h1 class="h1 mb-3 font-weight-normal text-center">Administration</h1>
+                <div class="mb-5">
+                    <h2 class="h2 mb-3 font-weight-normal">Informations personnelles</h2>
+                    <a href="{{ path('admin_infos_edit', {'id': moi.id }) }}" class="text-white">Editer mes
+                        infos </a><br>
+                    <a href="{{ path('admin_email_edit', {'id': moi.id}) }}" class="text-white"> Modifier mon
+                        mail </a><br>
+                    <a href="{{ path('admin_password_edit', {'id': moi.id}) }}" class="text-white"> Modifier mon mot de
+                        passe </a><br>
+                </div>
+                <div>
+                    <h2 class="h2 mb-3 font-weight-normal">Projets</h2>
+                    <a href="{{ path('admin_new_projet') }}" class="text-white">Ajouter un projet</a>
+                </div>
+                <section class="portfolio pt-4" id="portfolio">
+                    <h5 class="h5 mb-3 font-weight-normal">Liste des projets</h5>
+                    <div class="row">
+                        {% for project in projects %}
+                            <div class="col-md-3 col-lg-3 mb-5">
+                                <a href="{{ path('project_show', {'id': project.id }) }}">
+                                    <div class="portfolio-item mx-auto">
+                                        <div class="portfolio-item-caption d-flex flex-column align-items-center justify-content-center h-100 w-100">
+                                            <div class="portfolio-item-caption-content text-center text-white">{{ project.title }}</div>
+                                            <div>
+                                                <a href="{{ path('admin_edit_projet', {'id': project.id }) }}" class="btn btn-secondary">Editer</a>
+                                                {% include 'Admin/_projectDeleteForm.html.twig' %}
+                                            </div>
+                                        </div>
+                                        <img class="img-fluid" src="{{ asset('uploads/projects/covers/' ~ project.cover) }}" alt=""/>
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </section>
+                <div>
+                    <h2 class="h2 mb-3 font-weight-normal">Langages</h2>
+                    <a href="{{ path('admin_new_langage') }}" class="text-white">Ajouter un langage</a>
+                </div>
+            </div>
+            <!-- Icon Divider-->
+            <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- Masthead Subheading-->
+            <p class="masthead-subheading font-weight-light mb-0">{% block baseline %}{% endblock %}</p>
+        </div>
+    </header>
+    <section class="page-section">
+        <div class="container">
+            <h2 class="h2 mb-3 font-weight-normal">Demandes de contact</h2>
+            <div class="row flex-wrap">
+                {% if contacts %}
+                {% for contact in contacts %}
+                    <div class="col-sm-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ contact.name }} - le {{ contact.date|date("d/m/Y") }}</h5>
+                                <p class="card-text">{{ contact.message }}</p>
+                                <ul>
+                                    <li>{{ contact.mail }}</li>
+                                    {% if contact.phone %}
+                                        <li>{{ contact.phone }}</li>
+                                    {% endif %}
+                                </ul>
+                                {% include 'Admin/_contactDeleteForm.html.twig' %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% else %}
+                <p class="ml-4">Y'a personne frr</p>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}
