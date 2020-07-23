@@ -232,4 +232,21 @@ class AdminController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/admin/projet/{id}/delete", name="delete_project", methods={"DELETE"})
+     * @param Request $request
+     * @param Projects $project
+     * @return Response
+     */
+    public function deleteProject(Request $request, Projects $project): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $project->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($project);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('admin_index');
+    }
 }
