@@ -1,0 +1,109 @@
+{% extends 'base.html.twig' %}
+{% block h1 %}{{ project.title }}{% endblock %}
+{% block baseline %}{{ project.baseline }}{% endblock %}
+{% block logo %}{{ asset('uploads/projects/logos/' ~ project.logo|default('../../img/socialgeek.png')) }}{% endblock %}
+{% block body %}
+    <!-- About Section-->
+    <section class="page-section text-black mb-0" id="about">
+        <div class="container">
+            <!-- About Section Heading-->
+            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Description</h2>
+            <!-- Icon Divider-->
+            <div class="divider-custom">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- About Section Content-->
+            <div class="row">
+                <div class="col-lg-4 ml-auto"><p class="lead">{{ project.description1 }}</p></div>
+                <div class="col-lg-4 mr-auto"><p class="lead">{{ project.description2 }}</p></div>
+            </div>
+        </div>
+    </section>
+    <section class="page-section portfolio bg-primary" id="portfolio">
+        <div class="container">
+            <!-- Portfolio Section Heading-->
+            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Screenshots</h2>
+            <!-- Icon Divider-->
+            <div class="divider-custom">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- Portfolio Grid Items-->
+            <div class="row">
+                {% for screenshot in project.screenshots %}
+                    <!-- Portfolio Item 1-->
+                    <div class="col-md-6 col-lg-4 mb-5">
+                        <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal{{ loop.index }}">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white">{{ screenshot.title }}</div>
+                            </div>
+                            <img class="img-fluid"
+                                 src="{{ asset('uploads/projects/screenshots/' ~ screenshot.file|default('../../img/cabin.png')) }}"
+                                 alt=""/>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <section class="page-section text-black mb-0" id="about">
+        <div class="container">
+            <!-- About Section Heading-->
+            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Informations techniques</h2>
+            <!-- Icon Divider-->
+            <div class="divider-custom">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- About Section Content-->
+            <div class="row">
+                <div class="col-lg-4 ml-auto"><p class="lead">Freelancer is a free bootstrap theme created by Start
+                        Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript
+                        as well as optional SASS stylesheets for easy customization.</p></div>
+                <div class="col-lg-4 mr-auto"><p class="lead">You can create your own custom avatar for the masthead,
+                        change the icon in the dividers, and add your email address to the contact form to make it fully
+                        functional!</p></div>
+            </div>
+        </div>
+    </section>
+    <section class="page-section bg-primary">
+        <!-- About Section Button-->
+        <div class="text-center mt-4">
+            <a class="btn btn-xl btn-outline-light" href="{{ project.link }}">
+                <i class="fas fa-globe mr-2"></i>
+                Voir le site
+            </a>
+        </div>
+    </section>
+    {% for screenshot in project.screenshots %}
+        <!-- Portfolio Modal 1-->
+        <div class="portfolio-modal modal fade" id="portfolioModal{{ loop.index }}" tabindex="-1" role="dialog"
+             aria-labelledby="portfolioModal1Label" aria-hidden="true">
+            <div class="modal-dialog modal-xl" role="document">
+                <div class="modal-content">
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fas fa-times"></i></span>
+                    </button>
+                    <div class="modal-body text-center">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <!-- Portfolio Modal - Image-->
+                                    <img class="img-fluid rounded mb-5" src="{{ asset('uploads/projects/screenshots/' ~ screenshot.file|default('../../img/cabin.png')) }}" alt=""/><br>
+                                    <button class="btn btn-primary" data-dismiss="modal">
+                                        <i class="fas fa-times fa-fw"></i>
+                                        Fermer la fenêtre
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
