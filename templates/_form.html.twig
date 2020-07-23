@@ -1,0 +1,74 @@
+{{ form_start(form) }}
+<div class="control-group">
+    <div class="form-group floating-label-form-group controls mb-0 pb-2">
+        <label>{{ form_label(form.name) }}</label>
+        {{ form_widget(form.name,
+            {'attr' :
+                {
+                    'placeholder': 'Nom *',
+                    'class': 'form-control',
+                    'id': 'name',
+                    'type': 'text',
+                    'required' : 'required',
+                    'data-validation-required-message' : 'Veuillez entrer votre nom'
+                }
+            }) }}
+        <p class="help-block text-danger"></p>
+    </div>
+</div>
+<div class="control-group">
+    <div class="form-group floating-label-form-group controls mb-0 pb-2">
+        <label>{{ form_label(form.mail) }}</label>
+        {{ form_widget(form.mail,
+            {'attr' :
+                {
+                    'placeholder': 'Adresse mail *',
+                    'class': 'form-control',
+                    'id': 'email',
+                    'type': 'text',
+                    'required' : 'required',
+                    'data-validation-required-message' : 'Veuillez entrer votre adresse mail'
+                }
+            }) }}
+        <p class="help-block text-danger"></p>
+    </div>
+</div>
+<div class="control-group">
+    <div class="form-group floating-label-form-group controls mb-0 pb-2">
+        <label>Numéro de téléphone</label>
+        {{ form_widget(form.phone,
+            {'attr' :
+                {
+                    'placeholder': 'Numéro de téléphone',
+                    'class': 'form-control',
+                    'id': 'phone',
+                    'type': 'text',
+                }
+            }) }}
+        <p class="help-block text-danger"></p>
+    </div>
+</div>
+<div class="control-group">
+    <div class="form-group floating-label-form-group controls mb-0 pb-2">
+        <label>Message</label>
+        {{ form_widget(form.message,
+            {'attr' :
+                {
+                    'placeholder': 'Message *',
+                    'class': 'form-control',
+                    'id': 'message',
+                    'required': 'required',
+                    'data-validation-required-message': 'Merci d\'entrer un message',
+                    'rows': '5'
+                }
+            }) }}
+        <p class="help-block text-danger"></p>
+    </div>
+</div>
+<br/>
+<div id="success"></div>
+<div class="form-group">
+    <button class="btn btn-secondary btn-xl" id="sendMessageButton" type="submit">Envoyer
+    </button>
+</div>
+{{ form_end(form) }}

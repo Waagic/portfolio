@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ContactsRepository;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,7 +29,7 @@ class Contacts
     private $mail;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="datetime")
      */
     private $date;
 
@@ -36,6 +37,11 @@ class Contacts
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $phone;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $name;
 
     public function getId(): ?int
     {
@@ -66,12 +72,12 @@ class Contacts
         return $this;
     }
 
-    public function getDate(): ?string
+    public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
     }
 
-    public function setDate(string $date): self
+    public function setDate(DateTimeInterface $date): self
     {
         $this->date = $date;
 
@@ -86,6 +92,18 @@ class Contacts
     public function setPhone(?string $phone): self
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(string $name): self
+    {
+        $this->name = $name;
 
         return $this;
     }

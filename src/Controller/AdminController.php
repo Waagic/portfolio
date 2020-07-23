@@ -3,19 +3,22 @@
 
 namespace App\Controller;
 
+use App\Entity\Contacts;
+use App\Entity\Projects;
 use App\Entity\User;
 use App\Form\EditEmailType;
 use App\Form\EditPasswordType;
+use App\Form\ProjectType;
 use App\Form\UserType;
+use App\Repository\ContactsRepository;
+use App\Repository\ProjectsRepository;
 use App\Repository\UserRepository;
+use App\Service\FileUploader;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
 /**
  * @Route(name="admin_")
@@ -25,15 +28,18 @@ class AdminController extends AbstractController
     /**
      * @Route("/admin", name="index")
      * @param UserRepository $userRepository
+     * @param ContactsRepository $contactsRepository
      * @return Response
      */
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, ContactsRepository $contactsRepository, ProjectsRepository $projectsRepository): Response
     {
 
         return $this->render('Admin/index.html.twig', [
             'moi' => $userRepository->findOneBy([
                 'name' => 'Lucas Marguiron'
-            ])
+            ]),
+            'contacts' => $contactsRepository->findAll(),
+            'projects' => $projectsRepository->findAll()
         ]);
     }
 
@@ -41,9 +47,10 @@ class AdminController extends AbstractController
      * @Route("admin/{id}/edit", name="infos_edit", methods={"GET","POST"})
      * @param Request $request
      * @param User $user
+     * @param FileUploader $fileUploader
      * @return Response
      */
-    public function edit(Request $request, User $user): Response
+    public function edit(Request $request, User $user, FileUploader $fileUploader): Response
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -54,24 +61,8 @@ class AdminController extends AbstractController
             // this condition is needed because the 'brochure' field is not required
             // so the file must be processed only when a file is uploaded
             if ($pictureFile) {
-                $originalFilename = pathinfo($pictureFile->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
-                $newFilename = $safeFilename . '-' . uniqid() . '.' . $pictureFile->guessExtension();
-
-                // Move the file to the directory where brochures are stored
-                try {
-                    $pictureFile->move(
-                        $this->getParameter('pictures_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
-
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
-                $user->setProfilePicture($newFilename);
+                $pictureFileName = $fileUploader->upload($pictureFile, $this->getParameter('pictures_directory'));
+                $user->setProfilePicture($pictureFileName);
             }
 
             $this->getDoctrine()->getManager()->flush();
@@ -131,6 +122,114 @@ class AdminController extends AbstractController
 
         return $this->render('Admin/Password/editPassword.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/admin/contact/{id}/delete", name="delete_contact", methods={"DELETE"})
+     * @param Request $request
+     * @param Contacts $contacts
+     * @return Response
+     */
+    public function deleteContact(Request $request, Contacts $contacts): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $contacts->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($contacts);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('admin_index');
+    }
+
+    /**
+     * @Route("/admin/projet/new", name="new_projet")
+     * @param Request $request
+     * @return Response
+     */
+    public function newProject(Request $request, FileUploader $fileUploader): Response
+    {
+        $project = new Projects();
+        $form = $this->createForm(ProjectType::class, $project);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $logo = $form->get('logo')->getData();
+            if ($logo) {
+                $pictureFileName = $fileUploader->upload($logo, $this->getParameter('logos_directory'));
+                $project->setLogo($pictureFileName);
+            }
+
+            $cover = $form->get('cover')->getData();
+            if ($cover) {
+                $pictureFileName = $fileUploader->upload($cover, $this->getParameter('covers_directory'));
+                $project->setCover($pictureFileName);
+            }
+
+            $screenshots = $form->get('screenshots')->all();
+            if ($screenshots) {
+                foreach ($screenshots as $screenshot) {
+                    $pictureFileName = $fileUploader->upload($screenshot->get('fileUpload')->getData(), $this->getParameter('screenshots_directory'));
+                    $screenshot->getData()->setFile($pictureFileName);
+                }
+            }
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($project);
+            $entityManager->flush();
+
+            return $this->redirectToRoute("admin_index");
+        }
+
+        return $this->render('Admin/Project/new.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/admin/projet/{id}/edit", name="edit_projet")
+     * @param Request $request
+     * @param FileUploader $fileUploader
+     * @param Projects $projects
+     * @return Response
+     */
+    public function editProject(Request $request, FileUploader $fileUploader, Projects $projects): Response
+    {
+        $form = $this->createForm(ProjectType::class, $projects);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $logo = $form->get('logo')->getData();
+            if ($logo) {
+                $pictureFileName = $fileUploader->upload($logo, $this->getParameter('logos_directory'));
+                $projects->setLogo($pictureFileName);
+            }
+
+            $cover = $form->get('cover')->getData();
+            if ($cover) {
+                $pictureFileName = $fileUploader->upload($cover, $this->getParameter('covers_directory'));
+                $projects->setCover($pictureFileName);
+            }
+
+            $screenshots = $form->get('screenshots')->all();
+            foreach ($screenshots as $screenshot) {
+                $fileUpload = $screenshot->get('fileUpload')->getData();
+                if ($fileUpload) {
+                    $pictureFileName = $fileUploader->upload($fileUpload, $this->getParameter('screenshots_directory'));
+                    $screenshot->getData()->setFile($pictureFileName);
+                }
+            }
+
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('admin_index');
+        }
+
+        return $this->render('Admin/Project/edit.html.twig', [
+            'project' => $projects,
+            'form' => $form->createView()
         ]);
     }
 }
