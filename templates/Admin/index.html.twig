@@ -29,10 +29,10 @@
                                             <div class="portfolio-item-caption-content text-center text-white">{{ project.title }}</div>
                                             <div>
                                                 <a href="{{ path('admin_edit_projet', {'id': project.id }) }}" class="btn btn-secondary">Editer</a>
-                                                <btn class="btn btn-danger">X</btn>
+                                                {% include 'Admin/_projectDeleteForm.html.twig' %}
                                             </div>
                                         </div>
-                                        <img class="img-fluid" src="{{ asset('img/cabin.png') }}" alt=""/>
+                                        <img class="img-fluid" src="{{ asset('uploads/projects/covers/' ~ project.cover) }}" alt=""/>
                                     </div>
                                 </a>
                             </div>
