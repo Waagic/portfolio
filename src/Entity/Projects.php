@@ -66,6 +66,11 @@ class Projects
      */
     private $screenshots;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $cover;
+
     public function __construct()
     {
         $this->languages = new ArrayCollection();
@@ -202,6 +207,18 @@ class Projects
                 $screenshot->setProject(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCover(): ?string
+    {
+        return $this->cover;
+    }
+
+    public function setCover(string $cover): self
+    {
+        $this->cover = $cover;
 
         return $this;
     }

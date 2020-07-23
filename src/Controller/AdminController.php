@@ -161,6 +161,12 @@ class AdminController extends AbstractController
                 $project->setLogo($pictureFileName);
             }
 
+            $cover = $form->get('cover')->getData();
+            if ($cover) {
+                $pictureFileName = $fileUploader->upload($cover, $this->getParameter('covers_directory'));
+                $project->setCover($pictureFileName);
+            }
+
             $screenshots = $form->get('screenshots')->all();
             if ($screenshots) {
                 foreach ($screenshots as $screenshot) {
@@ -199,6 +205,12 @@ class AdminController extends AbstractController
             if ($logo) {
                 $pictureFileName = $fileUploader->upload($logo, $this->getParameter('logos_directory'));
                 $projects->setLogo($pictureFileName);
+            }
+
+            $cover = $form->get('cover')->getData();
+            if ($cover) {
+                $pictureFileName = $fileUploader->upload($cover, $this->getParameter('covers_directory'));
+                $projects->setCover($pictureFileName);
             }
 
             $screenshots = $form->get('screenshots')->all();

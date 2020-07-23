@@ -33,6 +33,20 @@ class ProjectType extends AbstractType
                     ])
                 ],
             ])
+            ->add('cover', FileType::class, [
+                'label' => 'Cover',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new File([
+                        'mimeTypes' => [
+                            'image/png',
+                            'image/jpeg',
+                        ],
+                        'mimeTypesMessage' => 'Il faut mettre une bonne image plz',
+                    ])
+                ],
+            ])
             ->add('baseline', TextType::class, ['label' => 'Sous titre'])
             ->add('description1', TextareaType::class, ['label' => 'Description 1'])
             ->add('description2', TextareaType::class, ['label' => 'Description 2'])
