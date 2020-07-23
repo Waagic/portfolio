@@ -40,8 +40,7 @@ class Projects
     private $description1;
 
     /**
-     * @ORM\Column(nullable=true)
-     * @ORM\ManyToMany(targetEntity=Languages::class, inversedBy="projects", )
+     * @ORM\ManyToMany(targetEntity=Languages::class, inversedBy="projects")
      */
     private $languages;
 

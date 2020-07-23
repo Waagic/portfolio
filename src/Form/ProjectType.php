@@ -2,8 +2,10 @@
 
 namespace App\Form;
 
+use App\Entity\Languages;
 use App\Entity\Projects;
 use App\Entity\Screenshots;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -58,7 +60,15 @@ class ProjectType extends AbstractType
                 'allow_delete' => true,
                 'prototype' => true,
                 'by_reference' => false,
+            ])
+            ->add('languages', EntityType::class, [
+                'class' => Languages::class,
+                'choice_label' => 'name',
+                'expanded' => true,
+                'multiple' => true,
+                'by_reference' => false,
             ]);
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
