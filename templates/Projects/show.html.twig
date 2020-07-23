@@ -52,7 +52,7 @@
     <section class="page-section text-black mb-0" id="about">
         <div class="container">
             <!-- About Section Heading-->
-            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Informations techniques</h2>
+            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Techologies utilisées</h2>
             <!-- Icon Divider-->
             <div class="divider-custom">
                 <div class="divider-custom-line"></div>
@@ -60,13 +60,12 @@
                 <div class="divider-custom-line"></div>
             </div>
             <!-- About Section Content-->
-            <div class="row">
-                <div class="col-lg-4 ml-auto"><p class="lead">Freelancer is a free bootstrap theme created by Start
-                        Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript
-                        as well as optional SASS stylesheets for easy customization.</p></div>
-                <div class="col-lg-4 mr-auto"><p class="lead">You can create your own custom avatar for the masthead,
-                        change the icon in the dividers, and add your email address to the contact form to make it fully
-                        functional!</p></div>
+            <div class="row justify-content-center">
+                <div class="col-lg-6 text-center">
+                    {% for language in project.languages %}
+                        <i class="{{ language.icon }} languageicon mx-2"></i>
+                    {% endfor %}
+                </div>
             </div>
         </div>
     </section>

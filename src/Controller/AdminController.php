@@ -4,10 +4,12 @@
 namespace App\Controller;
 
 use App\Entity\Contacts;
+use App\Entity\Languages;
 use App\Entity\Projects;
 use App\Entity\User;
 use App\Form\EditEmailType;
 use App\Form\EditPasswordType;
+use App\Form\LanguageType;
 use App\Form\ProjectType;
 use App\Form\UserType;
 use App\Repository\ContactsRepository;
@@ -248,5 +250,30 @@ class AdminController extends AbstractController
         }
 
         return $this->redirectToRoute('admin_index');
+    }
+
+    /**
+     * @Route("/admin/langage/new", name="new_langage")
+     * @param Request $request
+     * @return Response
+     */
+    public function newLangage(Request $request): Response
+    {
+        $langage = new Languages();
+        $form = $this->createForm(LanguageType::class, $langage);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($langage);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('admin_index');
+        }
+
+        return $this->render('Admin/Langages/new.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }
