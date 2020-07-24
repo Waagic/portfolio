@@ -53,7 +53,7 @@ class ProjectType extends AbstractType
             ->add('description1', TextareaType::class, ['label' => 'Description 1'])
             ->add('description2', TextareaType::class, ['label' => 'Description 2'])
             ->add('link', TextType::class, ['label' => 'Lien'])
-            ->add('screenshots', CollectionType::class, [
+            ->add('screenshot', CollectionType::class, [
                 'entry_type' => ScreenshotType::class,
                 'label' => false,
                 'allow_add' => true,
@@ -61,7 +61,7 @@ class ProjectType extends AbstractType
                 'prototype' => true,
                 'by_reference' => false,
             ])
-            ->add('languages', EntityType::class, [
+            ->add('language', EntityType::class, [
                 'class' => Language::class,
                 'choice_label' => 'name',
                 'expanded' => true,

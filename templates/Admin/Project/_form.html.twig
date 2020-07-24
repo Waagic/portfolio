@@ -4,16 +4,16 @@
     {{ form_row(form.logo) }}
     {{ form_row(form.cover) }}
     {{ form_row(form.baseline) }}
-    {{ form_row(form.languages) }}
+    {{ form_row(form.language) }}
     {{ form_row(form.description1) }}
     {{ form_row(form.description2) }}
     {{ form_row(form.link) }}
     <div class="methodLinks-container">
         <label class="col-form-label">Screenshots</label>
         <div class="js-methodLink-wrapper"
-             data-prototype="{{ form_widget(form.screenshots.vars.prototype)|e('html_attr') }}"
-             data-index="{{ form.screenshots|length }}">
-            {% for screenshot in form.screenshots %}
+             data-prototype="{{ form_widget(form.screenshot.vars.prototype)|e('html_attr') }}"
+             data-index="{{ form.screenshot|length }}">
+            {% for screenshot in form.screenshot %}
                 <div class="js-methodLink-item">
                     {{ form_errors(screenshot) }}
                     {{ form_row(screenshot.fileUpload) }}
@@ -31,7 +31,7 @@
         </a>
     </div>
     <div class="col-12 text-center">
-        <button class="btn form-button">{{ button_label|default('Créer la fiche méthode') }}</button>
+        <button class="btn btn-secondary form-button">{{ button_label|default('Creer le projet') }}</button>
     </div>
     {{ form_end(form) }}
 </div>
