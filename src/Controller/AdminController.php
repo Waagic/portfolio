@@ -171,7 +171,7 @@ class AdminController extends AbstractController
                 $project->setCover($pictureFileName);
             }
 
-            $screenshots = $form->get('screenshots')->all();
+            $screenshots = $form->get('screenshot')->all();
             if ($screenshots) {
                 foreach ($screenshots as $screenshot) {
                     $pictureFileName = $fileUploader->upload($screenshot->get('fileUpload')->getData(), $this->getParameter('screenshots_directory'));
@@ -217,7 +217,7 @@ class AdminController extends AbstractController
                 $projects->setCover($pictureFileName);
             }
 
-            $screenshots = $form->get('screenshots')->all();
+            $screenshots = $form->get('screenshot')->all();
             foreach ($screenshots as $screenshot) {
                 $fileUpload = $screenshot->get('fileUpload')->getData();
                 if ($fileUpload) {
