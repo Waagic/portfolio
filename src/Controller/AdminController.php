@@ -208,13 +208,13 @@ class AdminController extends AbstractController
             $logo = $form->get('logo')->getData();
             if ($logo) {
                 $pictureFileName = $fileUploader->upload($logo, $this->getParameter('logos_directory'));
-                $projects->setLogo($pictureFileName);
+                $project->setLogo($pictureFileName);
             }
 
             $cover = $form->get('cover')->getData();
             if ($cover) {
                 $pictureFileName = $fileUploader->upload($cover, $this->getParameter('covers_directory'));
-                $projects->setCover($pictureFileName);
+                $project->setCover($pictureFileName);
             }
 
             $screenshots = $form->get('screenshot')->all();

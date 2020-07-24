@@ -63,7 +63,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-6 text-center">
                     {% for language in project.language %}
-                        <i class="{{ language.icon }} languageicon mx-2"></i>
+                        <i class="{{ language.icon }} languageicon mx-2" title="{{ language.name }}"></i>
                     {% endfor %}
                 </div>
             </div>

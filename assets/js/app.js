@@ -138,4 +138,3 @@ require("jquery-ui/ui/effects/effect-slide");
     });
 
 })(jQuery); // End of use strict
-
