@@ -1,10 +1,10 @@
-{% extends 'base.html.twig' %}
+{% extends 'Projects/base.html.twig' %}
 {% block h1 %}{{ project.title }}{% endblock %}
 {% block baseline %}{{ project.baseline }}{% endblock %}
 {% block logo %}{{ asset('uploads/projects/logos/' ~ project.logo|default('../../img/socialgeek.png')) }}{% endblock %}
 {% block body %}
     <!-- About Section-->
-    <section class="page-section text-black mb-0" id="about">
+    <section class="page-section text-black mb-0" id="description">
         <div class="container">
             <!-- About Section Heading-->
             <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Description</h2>
@@ -21,7 +21,7 @@
             </div>
         </div>
     </section>
-    <section class="page-section portfolio bg-primary" id="portfolio">
+    <section class="page-section portfolio bg-primary" id="screenshots">
         <div class="container">
             <!-- Portfolio Section Heading-->
             <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Screenshots</h2>
@@ -36,7 +36,7 @@
                 {% for screenshot in project.screenshot %}
                     <!-- Portfolio Item 1-->
                     <div class="col-md-6 col-lg-4 mb-5">
-                        <div class="portfolio-item mx-auto" data-toggle="modal" data-target="#portfolioModal{{ loop.index }}">
+                        <div class="portfolio-item mx-auto screenshots" data-toggle="modal" data-target="#portfolioModal{{ loop.index }}">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                                 <div class="portfolio-item-caption-content text-center text-white">{{ screenshot.title }}</div>
                             </div>
@@ -49,7 +49,7 @@
             </div>
         </div>
     </section>
-    <section class="page-section text-black mb-0" id="about">
+    <section class="page-section text-black mb-0" id="technos">
         <div class="container">
             <!-- About Section Heading-->
             <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Techologies utilisées</h2>
