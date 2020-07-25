@@ -28,6 +28,8 @@ class ProjectFixtures extends Fixture
         $project->addLanguage($this->getReference("PHP"));
         $project->addLanguage($this->getReference("JavaScript"));
         $project->addLanguage($this->getReference("Symfony"));
+        $project->addLanguage($this->getReference("CSS"));
+        $project->addLanguage($this->getReference("HTML"));
         $this->addReference('TGG', $project);
         $manager->persist($project);
         $manager->flush();
