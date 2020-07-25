@@ -45,7 +45,7 @@ class DefaultController extends AbstractController
             ]),
             'projects' => $projectRepository->findBy(
                 array(),
-                array('id' => 'desc'),
+                array('id' => 'asc'),
                 3,
                 0
             ),
