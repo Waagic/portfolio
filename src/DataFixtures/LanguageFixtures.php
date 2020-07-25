@@ -28,6 +28,18 @@ class LanguageFixtures extends Fixture
         $this->addReference('Symfony', $language);
         $manager->persist($language);
 
+        $language = new Language();
+        $language->setName("CSS");
+        $language->setIcon("fab fa-css3");
+        $this->addReference('CSS', $language);
+        $manager->persist($language);
+
+        $language = new Language();
+        $language->setName("HTML");
+        $language->setIcon("fab fa-html5");
+        $this->addReference('HTML', $language);
+        $manager->persist($language);
+
         $manager->flush();
     }
 }

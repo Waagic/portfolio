@@ -1,4 +1,5 @@
 {% extends 'base.html.twig' %}
+{% block title %}{{ moi.title }} - {{ moi.name }}{% endblock %}
 {% block h1 %}{{ moi.name }}{% endblock %}
 {% block baseline %}{{ moi.title }}{% endblock %}
 {% block logo %}{{ asset('uploads/profile_pictures/' ~ moi.profilePicture|default('../../img/moi.JPG')) }}{% endblock %}
@@ -18,7 +19,7 @@
             <div class="row">
                 {% for project in projects %}
                     <div class="col-md-6 col-lg-4 mb-5">
-                        <a href="{{ path('project_show', {'id': project.id }) }}">
+                        <a href="{{ path('project_show', {'slug': project.slug }) }}">
                             <div class="portfolio-item mx-auto">
                                 <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                                     <div class="portfolio-item-caption-content text-center text-white">{{ project.title }}</div>

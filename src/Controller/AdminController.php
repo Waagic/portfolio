@@ -16,6 +16,7 @@ use App\Repository\ContactRepository;
 use App\Repository\ProjectRepository;
 use App\Repository\UserRepository;
 use App\Service\FileUploader;
+use App\Service\Slugify;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -151,13 +152,16 @@ class AdminController extends AbstractController
      * @param FileUploader $fileUploader
      * @return Response
      */
-    public function newProject(Request $request, FileUploader $fileUploader): Response
+    public function newProject(Request $request, FileUploader $fileUploader, Slugify $slugify): Response
     {
         $project = new Project();
         $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $slug = $slugify->generate($project->getTitle());
+            $project->setSlug($slug);
 
             $logo = $form->get('logo')->getData();
             if ($logo) {
@@ -198,12 +202,15 @@ class AdminController extends AbstractController
      * @param Project $project
      * @return Response
      */
-    public function editProject(Request $request, FileUploader $fileUploader, Project $project): Response
+    public function editProject(Request $request, FileUploader $fileUploader, Project $project, Slugify $slugify): Response
     {
         $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $slug = $slugify->generate($project->getTitle());
+            $project->setSlug($slug);
 
             $logo = $form->get('logo')->getData();
             if ($logo) {

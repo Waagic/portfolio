@@ -18,7 +18,7 @@ class FileUploader
         try {
             $file->move($targetDirectory, $fileName);
         } catch (FileException $e) {
-            // ... handle exception if something happens during file upload
+            echo $e->getMessage();
         }
 
         return $fileName;
