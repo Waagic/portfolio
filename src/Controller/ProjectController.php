@@ -45,7 +45,10 @@ class ProjectController extends AbstractController
     {
         return $this->render('Projects/index.html.twig', [
             'moi' => $this->user,
-            'projects' => $projectRepository->findAll()
+            'projects' => $projectRepository->findBy(
+                [],
+                ['id' => 'desc']
+            )
         ]);
     }
 }
