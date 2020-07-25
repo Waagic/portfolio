@@ -1,4 +1,5 @@
 {% extends 'Projects/base.html.twig' %}
+{% block title %}{{ project.title }} - {{ moi.name }}{% endblock %}
 {% block h1 %}{{ project.title }}{% endblock %}
 {% block baseline %}{{ project.baseline }}{% endblock %}
 {% block logo %}{{ asset('uploads/projects/logos/' ~ project.logo|default('../../img/socialgeek.png')) }}{% endblock %}
