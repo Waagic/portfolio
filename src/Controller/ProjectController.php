@@ -23,7 +23,7 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route("/projet/{slug}", name="show")
+     * @Route("/projets/{slug}", name="show")
      * @param ProjectRepository $projectRepository
      * @param Project $project
      * @return Response
@@ -33,6 +33,19 @@ class ProjectController extends AbstractController
         return $this->render('Projects/show.html.twig', [
             'moi' => $this->user,
             'project' => $project
+        ]);
+    }
+
+    /**
+     * @Route("/projets", name="index")
+     * @param ProjectRepository $projectRepository
+     * @return Response
+     */
+    public function index(ProjectRepository $projectRepository): Response
+    {
+        return $this->render('Projects/index.html.twig', [
+            'moi' => $this->user,
+            'projects' => $projectRepository->findAll()
         ]);
     }
 }
