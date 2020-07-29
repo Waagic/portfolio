@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Language;
 use App\Entity\Project;
+use App\Service\Slugify;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -18,7 +19,10 @@ class ProjectFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $project = new Project();
+        $slugify = new Slugify();
         $project->setTitle("La Gare Centrale - The Greener Good");
+        $slug = $slugify->generate($project->getTitle());
+        $project->setSlug($slug);
         $project->setLogo("tgg.png");
         $project->setCover("tgg.png");
         $project->setBaseline("Extranet d'informations pour une association lyonnaise");

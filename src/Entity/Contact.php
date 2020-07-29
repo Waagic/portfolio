@@ -39,7 +39,7 @@ class Contact
     private $date;
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @ORM\Column(type="string", length=10, nullable=true)
      * @Assert\Length(max="10", allowEmptyString="false", maxMessage="Veuillez entrer un numéro à 10 chiffres")
      * @Assert\Regex(pattern="/^[0-9]*$/", message="Le numéro de téléphone ne doit contenir que des chiffres")
      */
