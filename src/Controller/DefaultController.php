@@ -32,6 +32,10 @@ class DefaultController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $date = new \DateTime('NOW');
             $contact->setDate($date);
+            $this->addFlash(
+                'message',
+                'Votre message a bien été envoyé'
+            );
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($contact);
             $entityManager->flush();
