@@ -67,6 +67,11 @@
         <p class="masthead-subheading font-weight-light mb-0">{% block baseline %}{% endblock %}</p>
     </div>
 </header>
+{% for message in app.flashes('message') %}
+    <div class="alert-success text-center">
+        {{ message }}
+    </div>
+{% endfor %}
 {% block body %}
 {% endblock body %}
 <!-- Footer-->
