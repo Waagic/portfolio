@@ -6,7 +6,7 @@
   "devDependencies": {
     "bootstrap": "^4.5.0",
     "jquery": "^3.5.1",
-    "jquery-ui": "^1.12.1",
+    "jquery-ui": "^1.13.2",
     "node-sass": "^4.14.1",
     "popper.js": "^1.16.1",
     "sass-loader": "^7.0.1",
